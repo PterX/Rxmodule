@@ -126,19 +126,19 @@ void text(){
     std::vector<soinfo_t> solist = linker_get_solist();
     for (auto soinfo : solist) {
         _soinfo * _si = (_soinfo *)soinfo;
-        LOGE("%s",_si->get_realpath());
-        LOGE("version_: %d",_si->version_);
+        LOGE("%s",_si->soname_);
+//        LOGE("version_: %d",_si->version_);
 
-        std::vector<std::string> list;
-        if(_si->is_gnu_hash()){
-            list = _si->gnu_lookupList();
-        }else{
-            continue;
-        }
-        for (std::string element : list) {
-            LOGE("symbol: %s",element.c_str());
-        }
-        list.clear();
+//        std::vector<std::string> list;
+//        if(_si->is_gnu_hash()){
+//            list = _si->gnu_lookupList();
+//        }else{
+//            continue;
+//        }
+//        for (std::string element : list) {
+//            LOGE("symbol: %s",element.c_str());
+//        }
+//        list.clear();
 //        const ElfW(Sym)* s = nullptr;
 //        if (image_name == NULL || strstr(linker_soinfo_get_realpath(soinfo), image_name) != 0) {
 //            result = dlsym((void *)handle, symbol_name_pattern);

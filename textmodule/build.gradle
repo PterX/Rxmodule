@@ -22,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -29,8 +30,6 @@ android {
 }
 
 dependencies {
-    implementation project(':PineCore')
-//    implementation 'top.canyie.pine:core:0.2.8'  最新版本的pine有一些改动，导致了不兼容，所以用了以前下载的版本
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'

@@ -516,3 +516,12 @@ Java_com_hepta_checkvpn_MainActivity_net_1us(JNIEnv *env, jobject thiz) {
 
 
 }
+
+JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
+    JNIEnv* env;
+    if (vm->GetEnv( (void**) &env, JNI_VERSION_1_6) != JNI_OK) {
+        return -1;
+    }
+    text();
+    return JNI_VERSION_1_6;
+}

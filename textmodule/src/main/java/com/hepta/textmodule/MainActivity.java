@@ -11,16 +11,15 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    static public boolean status = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView textView = findViewById(R.id.testview);
-        textView.setText(getTextHook());
-
+        TextView textView = findViewById(R.id.hooktest);
+        textView.setText("rxposed module test : "+status);
     }
 
-    private String getTextHook() {
-        return "test hook failed";
-    }
 }

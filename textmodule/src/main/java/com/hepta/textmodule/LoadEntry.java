@@ -3,52 +3,28 @@ package com.hepta.textmodule;
 import android.content.Context;
 import android.util.Log;
 
-//import top.canyie.pine.Pine;
-//import top.canyie.pine.callback.MethodHook;
-import top.custom.hepta.Pine;
-import top.custom.hepta.callback.MethodHook;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 
 public class LoadEntry {
 
 
     public static void Entry(Context context , String source,String argument){
-        PreLoadNativeSO(context,source);
         hookAppText(context);
     }
 
+    //目前只需要这个函数，注入的时候修改目标MainActivity 的status的值
     private static void hookAppText(Context context) {
         Log.e("Rzx","hookAppText entry");
         try {
-            Class<?> MTGuard = context.getClassLoader().loadClass("com.hepta.textapp.MainActivity");
-            Pine.hook(MTGuard.getDeclaredMethod("getTextHook"), new MethodHook() {
-                @Override
-                public void beforeCall(Pine.CallFrame callFrame) throws Throwable {
-
-                }
-                @Override
-                public void afterCall(Pine.CallFrame callFrame) throws Throwable {
-                    String result = (String) callFrame.getResult();
-//                    String libnative = (String) callFrame.args[1];
-                    Log.e("LoadEntry","result:"+result);
-                    callFrame.setResult("rxposed text successful");
-                }
-            });
-        } catch (NoSuchMethodException | ClassNotFoundException e) {
+            Class<?> MainActivity_cls = context.getClassLoader().loadClass("com.hepta.textapp.MainActivity");
+            Field status =  MainActivity_cls.getField("status");
+            status.setAccessible(true);
+            status.set(null, true);
+        } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static void PreLoadNativeSO(Context context, String source) {
-        try {
-            String abi= "arm64-v8a";
-            if(!android.os.Process.is64Bit()){
-                abi = "armeabi-v7a";
-            }
-            String str = source+"!/lib/"+abi+"/libpine.so";
-            System.load(str);
-        }catch (Exception e){
-            Log.e("LoadEntry","LoadSo error");
-        }
-
+        Log.e("Rzx","hookAppText end");
     }
 }
